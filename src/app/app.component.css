@@ -135,6 +135,13 @@
   gap: 24px;
 }
 
+.header-controls {
+  display: flex;
+  flex: 0 0 auto;
+  align-items: center;
+  gap: 12px;
+}
+
 .brand {
   gap: 14px;
 }
@@ -947,6 +954,8 @@
 
   .ticker { margin-bottom: 18px; }
   .site-header { margin-bottom: 30px; padding: 18px 16px; }
+  .header-top { flex-wrap: wrap; }
+  .header-controls { margin-left: auto; gap: 8px; }
   .brand-photo { width: 38px; height: 38px; }
   .brand-copy strong { max-width: 260px; font-size: 15px; }
   .brand-copy small { max-width: 260px; font-size: 8px; line-height: 1.6; }

@@ -1,44 +1,49 @@
-<div class="portfolio antialiased" [class.theme-dark]="isDark()">
-  <a class="skip-link" href="#conteudo">Pular para o conteúdo</a>
+<div class="portfolio antialiased" [class.theme-dark]="isDark()" [attr.lang]="language() === 'pt' ? 'pt-BR' : 'en'">
+  <a class="skip-link" href="#conteudo">{{ copy().skip }}</a>
 
-  <div class="ticker" aria-label="Áreas de atuação">
+  <div class="ticker" [attr.aria-label]="copy().areas">
     <div class="ticker-track" aria-hidden="true">
-      @for (copy of [0, 1]; track copy) {
-        <span>△ ENGENHARIA DE SOFTWARE <i>·</i> TECHOPS <i>·</i> ELETRÔNICA <i>·</i> CULTURA MAKER <i>·</i> BELO HORIZONTE, BRASIL <i>·</i></span>
+      @for (tickerCopy of [0, 1]; track tickerCopy) {
+        <span [innerHTML]="copy().ticker"></span>
       }
     </div>
   </div>
 
   <header class="site-header frame">
     <div class="header-top">
-      <a class="brand" href="#overview" aria-label="Lucas Gomes, início">
+      <a class="brand" href="#overview" [attr.aria-label]="copy().home">
         <img class="brand-photo" src="/images/profile/lucas-gomes.jpg" alt="" />
         <span class="brand-copy">
           <strong>Lucas Gomes</strong>
-          <small>ESTUDANTE DE ENGENHARIA DE SOFTWARE E ESTAGIÁRIO DE TECHOPS · BELO HORIZONTE, BRASIL</small>
+          <small>{{ copy().brandRole }}</small>
         </span>
       </a>
 
-      <button
-        class="theme-toggle"
-        type="button"
-        (click)="toggleTheme()"
-        [attr.aria-pressed]="isDark()"
-        [attr.aria-label]="isDark() ? 'Ativar tema claro' : 'Ativar tema escuro'"
-      >
-        <span aria-hidden="true">{{ isDark() ? '☼' : '◐' }}</span>
-        {{ isDark() ? 'CLARO' : 'ESCURO' }}
-      </button>
+      <div class="header-controls">
+        <button class="theme-toggle" type="button" (click)="toggleLanguage()" [attr.aria-label]="copy().languageLabel">
+          {{ copy().languageButton }}
+        </button>
+        <button
+          class="theme-toggle"
+          type="button"
+          (click)="toggleTheme()"
+          [attr.aria-pressed]="isDark()"
+          [attr.aria-label]="isDark() ? copy().themeLight : copy().themeDark"
+        >
+          <span aria-hidden="true">{{ isDark() ? '☼' : '◐' }}</span>
+          {{ isDark() ? (language() === 'pt' ? 'CLARO' : 'LIGHT') : (language() === 'pt' ? 'ESCURO' : 'DARK') }}
+        </button>
+      </div>
     </div>
 
-    <nav class="section-nav" aria-label="Navegação principal">
-      <a href="#overview"><span class="nav-dot dot-black"></span> início</a>
-      <a href="#work"><span class="nav-dot dot-lime"></span> experiência</a>
-      <a href="#projects"><span class="nav-dot dot-blue"></span> projetos</a>
-      <a href="#certifications"><span class="nav-dot dot-purple"></span> certificados</a>
-      <a href="#education"><span class="nav-dot dot-orange"></span> formação</a>
-      <a href="#volunteering"><span class="nav-dot dot-pink"></span> atividades extras</a>
-      <a href="#contact"><span class="nav-dot dot-yellow"></span> contato</a>
+    <nav class="section-nav" [attr.aria-label]="copy().navigation">
+      <a href="#overview"><span class="nav-dot dot-black"></span> {{ copy().homeNav }}</a>
+      <a href="#work"><span class="nav-dot dot-lime"></span> {{ copy().experienceNav }}</a>
+      <a href="#projects"><span class="nav-dot dot-blue"></span> {{ copy().projectsNav }}</a>
+      <a href="#certifications"><span class="nav-dot dot-purple"></span> {{ copy().certificatesNav }}</a>
+      <a href="#education"><span class="nav-dot dot-orange"></span> {{ copy().educationNav }}</a>
+      <a href="#volunteering"><span class="nav-dot dot-pink"></span> {{ copy().activitiesNav }}</a>
+      <a href="#contact"><span class="nav-dot dot-yellow"></span> {{ copy().contactNav }}</a>
     </nav>
   </header>
 
@@ -47,47 +52,49 @@
       <div class="decor decor-cross" aria-hidden="true">✳</div>
       <div class="decor decor-target" aria-hidden="true">⊕</div>
       <div class="hero-copy">
-        <p class="eyebrow"><span class="live-dot"></span> APRESENTAÇÃO · BH, BRASIL <span class="eyebrow-index">· 2026</span></p>
+        <p class="eyebrow"><span class="live-dot"></span> {{ copy().introEyebrow }} <span class="eyebrow-index">· 2026</span></p>
         <h1 id="hero-title">LUCAS<br /><span class="highlight-word">GOMES.</span></h1>
-        <p class="hero-role">Estudante de Engenharia de Software e Estagiário de TechOps</p>
-        <p class="hero-description">Estudante de Engenharia de Software na PUC Minas, com formação técnica em Eletrônica pelo CEFET-MG.</p>
-        <a class="button button-dark" href="#work">VER EXPERIÊNCIA <span aria-hidden="true">↘</span></a>
+        <p class="hero-role">{{ copy().role }}</p>
+        <p class="hero-description">{{ copy().introDescription }}</p>
+        <a class="button button-dark" href="#work">{{ copy().seeExperience }} <span aria-hidden="true">↘</span></a>
       </div>
-      <div class="hero-side" aria-label="Áreas de interesse">
-        <img class="hero-sticker" src="/images/profile/lucas-gomes.jpg" alt="Foto de Lucas Gomes" />
-        <span class="hero-side-label">HARDWARE<br />+ SOFTWARE</span>
+      <div class="hero-side" [attr.aria-label]="copy().interestAreas">
+        <img class="hero-sticker" src="/images/profile/lucas-gomes.jpg" [alt]="copy().photoAlt" />
+        <span class="hero-side-label" [innerHTML]="copy().hardwareSoftware"></span>
         <span class="hero-side-symbol" aria-hidden="true">✳</span>
-        <span class="hero-side-note">CULTURA<br />MAKER_</span>
+        <span class="hero-side-note" [innerHTML]="copy().makerCulture"></span>
       </div>
       <span class="hero-index" aria-hidden="true">OV / 07</span>
     </section>
 
     <section class="content-section frame" aria-labelledby="summary-title">
       <div class="section-heading">
-        <p class="eyebrow">FORM OV-00 · ÍNDICE DE REGISTROS</p>
+        <p class="eyebrow">{{ copy().summaryEyebrow }}</p>
         <span class="section-number">OV</span>
       </div>
-      <h2 id="summary-title">TECNOLOGIA<br />EM VÁRIAS <span class="highlight-word">CAMADAS.</span></h2>
+      <h2 id="summary-title" [innerHTML]="copy().summaryTitle"></h2>
       <div class="about-grid">
-        <p class="about-lead">Da infraestrutura física ao software — construindo, entendendo e conectando sistemas.</p>
+        <p class="about-lead">{{ copy().aboutLead }}</p>
         <div class="about-copy">
-          <p>Estudante de Engenharia de Software na PUC Minas, com formação técnica em Eletrônica pelo CEFET-MG. Apaixonado pela cultura maker e por construir soluções que unem infraestrutura física, hardware embarcado e desenvolvimento web.</p>
-          <p>Minha experiência vai da educação tecnológica — simplificando tópicos complexos de hardware e software para jovens — ao diagnóstico de hardware em baixo nível, criação de automações e suporte operacional de infraestruturas.</p>
+          <p>{{ copy().aboutFirst }}</p>
+          <p>{{ copy().aboutSecond }}</p>
         </div>
       </div>
-      <div class="skill-strip" aria-label="Áreas de atuação">
-        <span>ENGENHARIA DE SOFTWARE</span><span>TECHOPS</span><span>ELETRÔNICA</span><span>HARDWARE EMBARCADO</span><span>CULTURA MAKER</span>
+      <div class="skill-strip" [attr.aria-label]="copy().areas">
+        @for (skill of copy().skills; track skill) {
+          <span>{{ skill }}</span>
+        }
       </div>
     </section>
 
     <section class="content-section frame" id="work" aria-labelledby="work-title">
       <div class="section-heading">
-        <p class="eyebrow">FORM WK-01 · EXPERIÊNCIA PROFISSIONAL</p>
+        <p class="eyebrow">{{ copy().workEyebrow }}</p>
         <span class="section-number">01</span>
       </div>
       <div class="section-title-row">
-        <h2 id="work-title">EXPERIÊNCIA<span class="highlight-word">.</span></h2>
-        <span class="count-label">{{ workEntries.length }} REGISTROS ↘</span>
+        <h2 id="work-title">{{ copy().experienceTitle }}<span class="highlight-word">.</span></h2>
+        <span class="count-label">{{ workEntries.length }} {{ copy().records }} ↘</span>
       </div>
       <div class="record-list">
         @for (entry of workEntries; track entry.title) {
@@ -96,15 +103,15 @@
             <div class="record-content">
               <div class="record-heading">
                 <div>
-                  <h3>{{ entry.title }}</h3>
-                  <p class="record-organization">{{ entry.organization }}</p>
+                  <h3>{{ localized(entry.title, entry.english?.title) }}</h3>
+                  <p class="record-organization">{{ localized(entry.organization, entry.english?.organization) }}</p>
                 </div>
-                <p class="record-period">{{ entry.period }}</p>
+                <p class="record-period">{{ localized(entry.period, entry.english?.period) }}</p>
               </div>
-              <p class="record-description">{{ entry.description }}</p>
+              <p class="record-description">{{ localized(entry.description, entry.english?.description) }}</p>
               <div class="tag-list">
                 @for (tag of entry.tags; track tag) {
-                  <span>{{ tag }}</span>
+                  <span>{{ localized(tag, entry.english?.tags?.[$index]) }}</span>
                 }
               </div>
             </div>
@@ -115,12 +122,12 @@
 
     <section class="content-section frame projects-section" id="projects" aria-labelledby="projects-title">
       <div class="section-heading">
-        <p class="eyebrow">FORM PJ-02 · PROJETOS SELECIONADOS</p>
+        <p class="eyebrow">{{ copy().projectsEyebrow }}</p>
         <span class="section-number">02</span>
       </div>
       <div class="section-title-row">
-        <h2 id="projects-title">PROJETOS<span class="highlight-word">.</span></h2>
-        <span class="count-label">{{ projects.length }} REGISTROS ↘</span>
+        <h2 id="projects-title">{{ copy().projectsTitle }}<span class="highlight-word">.</span></h2>
+        <span class="count-label">{{ projects.length }} {{ copy().records }} ↘</span>
       </div>
 
       <div class="project-grid">
@@ -129,7 +136,7 @@
             class="project-card"
             [class]="'project-card project-' + project.color"
             [href]="project.repositoryUrl"
-            [attr.aria-label]="'Abrir o repositório de ' + project.title + ' no GitHub'"
+            [attr.aria-label]="copy().projectRepository + ' ' + project.title + ' ' + copy().githubSuffix"
             target="_blank"
             rel="noopener noreferrer"
           >
@@ -140,23 +147,23 @@
                 <span class="project-art project-art-primary">{{ project.title }}</span>
                 <span class="project-art project-art-secondary">{{ project.period || 'PUC MINAS' }}</span>
               }
-              <span class="visual-caption">FIG. {{ $index + 1 }} — {{ project.tags[0] }}</span>
+              <span class="visual-caption">FIG. {{ $index + 1 }} — {{ localized(project.tags[0], project.english?.tags?.[0]) }}</span>
             </div>
             <div class="project-info">
               <div class="project-meta">
-                <span>PROJETO · {{ project.period || 'PUC MINAS' }}</span>
+                <span>{{ copy().projectType }} · {{ localized(project.period || 'PUC MINAS', project.english?.period || 'PUC MINAS') }}</span>
                 <span>{{ $index + 1 }} / {{ projects.length }}</span>
               </div>
               <h3>{{ project.title }}</h3>
-              <p>{{ project.description }}</p>
+              <p>{{ localized(project.description, project.english?.description) }}</p>
               <div class="tag-list">
                 @for (tag of project.tags; track tag) {
-                  <span>{{ tag }}</span>
+                  <span>{{ localized(tag, project.english?.tags?.[$index]) }}</span>
                 }
               </div>
-              <span class="project-repo-link">ABRIR REPOSITÓRIO <span aria-hidden="true">↗</span></span>
+              <span class="project-repo-link">{{ copy().openRepository }} <span aria-hidden="true">↗</span></span>
             </div>
-            <span [class]="'project-badge badge-' + project.color">{{ project.tags[0] }}</span>
+            <span [class]="'project-badge badge-' + project.color">{{ localized(project.tags[0], project.english?.tags?.[0]) }}</span>
           </a>
         }
       </div>
@@ -164,12 +171,12 @@
 
     <section class="content-section frame" id="certifications" aria-labelledby="certifications-title">
       <div class="section-heading">
-        <p class="eyebrow">FORM CE-03 · CERTIFICADOS E LICENÇAS</p>
+        <p class="eyebrow">{{ copy().certificatesEyebrow }}</p>
         <span class="section-number">03</span>
       </div>
       <div class="section-title-row">
-        <h2 id="certifications-title">CERTIFICADOS<span class="highlight-word">.</span></h2>
-        <span class="count-label">{{ certifications.length }} REGISTRO ↘</span>
+        <h2 id="certifications-title">{{ copy().certificatesTitle }}<span class="highlight-word">.</span></h2>
+        <span class="count-label">{{ certifications.length }} {{ copy().record }} ↘</span>
       </div>
       <div class="record-list">
         @for (entry of certifications; track entry.title) {
@@ -178,12 +185,12 @@
             <div class="record-content">
               <div class="record-heading">
                 <div>
-                  <h3>{{ entry.title }}</h3>
-                  <p class="record-organization">{{ entry.organization }}</p>
+                  <h3>{{ localized(entry.title, entry.english?.title) }}</h3>
+                  <p class="record-organization">{{ localized(entry.organization, entry.english?.organization) }}</p>
                 </div>
-                <p class="record-period">{{ entry.period }}</p>
+                <p class="record-period">{{ localized(entry.period, entry.english?.period) }}</p>
               </div>
-              <p class="record-description">{{ entry.description }}</p>
+              <p class="record-description">{{ localized(entry.description, entry.english?.description) }}</p>
             </div>
           </article>
         }
@@ -192,12 +199,12 @@
 
     <section class="content-section frame" id="education" aria-labelledby="education-title">
       <div class="section-heading">
-        <p class="eyebrow">FORM ED-04 · FORMAÇÃO ACADÊMICA</p>
+        <p class="eyebrow">{{ copy().educationEyebrow }}</p>
         <span class="section-number">04</span>
       </div>
       <div class="section-title-row">
-        <h2 id="education-title">FORMAÇÃO<span class="highlight-word">.</span></h2>
-        <span class="count-label">{{ education.length }} REGISTROS ↘</span>
+        <h2 id="education-title">{{ copy().educationTitle }}<span class="highlight-word">.</span></h2>
+        <span class="count-label">{{ education.length }} {{ copy().records }} ↘</span>
       </div>
       <div class="record-list">
         @for (entry of education; track entry.title) {
@@ -206,12 +213,12 @@
             <div class="record-content">
               <div class="record-heading">
                 <div>
-                  <h3>{{ entry.title }}</h3>
-                  <p class="record-organization">{{ entry.organization }}</p>
+                  <h3>{{ localized(entry.title, entry.english?.title) }}</h3>
+                  <p class="record-organization">{{ localized(entry.organization, entry.english?.organization) }}</p>
                 </div>
-                <p class="record-period">{{ entry.period }}</p>
+                <p class="record-period">{{ localized(entry.period, entry.english?.period) }}</p>
               </div>
-              <p class="record-description">{{ entry.description }}</p>
+              <p class="record-description">{{ localized(entry.description, entry.english?.description) }}</p>
             </div>
           </article>
         }
@@ -220,12 +227,12 @@
 
     <section class="content-section frame" id="volunteering" aria-labelledby="volunteering-title">
       <div class="section-heading">
-        <p class="eyebrow">FORM VO-05 · ATIVIDADES EXTRACURRICULARES</p>
+        <p class="eyebrow">{{ copy().activitiesEyebrow }}</p>
         <span class="section-number">05</span>
       </div>
       <div class="section-title-row">
-        <h2 id="volunteering-title">VOLUNTARIADO<br />E <span class="highlight-word">ATIVIDADES EXTRAS.</span></h2>
-        <span class="count-label">{{ extracurriculars.length }} REGISTROS ↘</span>
+        <h2 id="volunteering-title" [innerHTML]="copy().activitiesTitle"></h2>
+        <span class="count-label">{{ extracurriculars.length }} {{ copy().records }} ↘</span>
       </div>
       <div class="record-list">
         @for (entry of extracurriculars; track entry.title) {
@@ -234,14 +241,14 @@
             <div class="record-content">
               <div class="record-heading">
                 <div>
-                  <h3>{{ entry.title }}</h3>
+                  <h3>{{ localized(entry.title, entry.english?.title) }}</h3>
                   @if (entry.organization) {
-                    <p class="record-organization">{{ entry.organization }}</p>
+                    <p class="record-organization">{{ localized(entry.organization, entry.english?.organization) }}</p>
                   }
                 </div>
-                <p class="record-period">{{ entry.period }}</p>
+                <p class="record-period">{{ localized(entry.period, entry.english?.period) }}</p>
               </div>
-              <p class="record-description">{{ entry.description }}</p>
+              <p class="record-description">{{ localized(entry.description, entry.english?.description) }}</p>
             </div>
           </article>
         }
@@ -250,15 +257,15 @@
 
     <section class="contact-section frame" id="contact" aria-labelledby="contact-title">
       <div class="section-heading">
-        <p class="eyebrow">FORM CT-06 · CONTATO E CRÉDITOS</p>
+        <p class="eyebrow">{{ copy().contactEyebrow }}</p>
         <span class="section-number">06</span>
       </div>
       <div class="contact-grid">
         <div>
-          <h2 id="contact-title">VAMOS<br /><span class="highlight-word">CONVERSAR?</span></h2>
-          <p class="contact-intro">Entre em contato para conversar sobre tecnologia, projetos e novas oportunidades. Envie sua mensagem diretamente por aqui.</p>
+          <h2 id="contact-title" [innerHTML]="copy().contactTitle"></h2>
+          <p class="contact-intro">{{ copy().contactIntro }}</p>
         </div>
-        <div class="social-list" aria-label="Redes sociais">
+        <div class="social-list" [attr.aria-label]="copy().socialLinks">
           @for (link of socialLinks; track link.label) {
             <a [href]="link.url" [attr.target]="link.external ? '_blank' : null" [attr.rel]="link.external ? 'noopener noreferrer' : null">
               <span>{{ link.label }}</span><span class="social-handle">{{ link.detail }} ↗</span>
@@ -268,45 +275,45 @@
       </div>
       <form class="contact-form" #contactForm="ngForm" (ngSubmit)="sendContactMessage(contactForm)">
         <div class="form-field">
-          <label for="contact-name">NOME</label>
+          <label for="contact-name">{{ copy().name }}</label>
           <input
             id="contact-name"
             name="name"
             type="text"
             autocomplete="name"
-            placeholder="Seu nome"
+            [placeholder]="copy().namePlaceholder"
             [(ngModel)]="contactName"
             required
           />
         </div>
         <div class="form-field">
-          <label for="contact-email">E-MAIL</label>
+          <label for="contact-email">{{ copy().email }}</label>
           <input
             id="contact-email"
             name="email"
             type="email"
             autocomplete="email"
-            placeholder="voce@exemplo.com"
+            [placeholder]="copy().emailPlaceholder"
             [(ngModel)]="contactEmail"
             required
           />
         </div>
         <div class="form-field form-message">
-          <label for="contact-message">MENSAGEM</label>
+          <label for="contact-message">{{ copy().message }}</label>
           <textarea
             id="contact-message"
             name="message"
             rows="5"
-            placeholder="Escreva sua mensagem..."
+            [placeholder]="copy().messagePlaceholder"
             [(ngModel)]="contactMessage"
             required
           ></textarea>
         </div>
         <button class="button button-dark form-submit" type="submit" [disabled]="contactStatus() === 'sending'">
           @if (contactStatus() === 'sending') {
-            ENVIANDO...
+            {{ copy().sending }}
           } @else {
-            ENVIAR MENSAGEM <span aria-hidden="true">↗</span>
+            {{ copy().sendMessage }} <span aria-hidden="true">↗</span>
           }
         </button>
         @if (contactStatusMessage()) {
@@ -321,8 +328,8 @@
 
   <footer class="site-footer">
     <a class="footer-brand" href="#overview"><img class="brand-photo" src="/images/profile/lucas-gomes.jpg" alt="" /> LUCAS GOMES</a>
-    <p>DESENVOLVIDO COM ANGULAR, TYPESCRIPT E CSS.</p>
-    <a href="#overview">VOLTAR AO TOPO ↑</a>
-    <span class="footer-copyright">© 2026 · BELO HORIZONTE, BRASIL</span>
+    <p>{{ copy().footerCredit }}</p>
+    <a href="#overview">{{ copy().backToTop }} ↑</a>
+    <span class="footer-copyright">{{ copy().copyright }}</span>
   </footer>
 </div>
